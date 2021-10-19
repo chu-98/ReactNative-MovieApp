@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View, useColorScheme } from "react-native";
+import { useColorScheme } from "react-native";
 
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
@@ -42,7 +42,7 @@ export default function Tabs() {
         component={Movies}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="film" size={size} color={color} />
+            <Ionicons name="film-outline" size={size} color={color} />
           ),
         }}
       />
