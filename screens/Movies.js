@@ -1,15 +1,15 @@
 import React from "react";
 import styled from "styled-components/native";
-import { Text, TouchableOpacity } from "react-native";
 
 const Btn = styled.View`
   flex: 1;
   justify-content: center;
   align-items: center;
+  background-color: ${props => props.theme.mainBgColor};
 `;
 
 const Title = styled.Text`
-  color: blue;
+  color: ${props => props.theme.textColor};
 `;
 
 const Movies = ({ navigation: { navigate } }) => (
