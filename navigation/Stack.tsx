@@ -1,21 +1,32 @@
 import React from "react";
 
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import {
+  createNativeStackNavigator,
+  NativeStackScreenProps,
+} from "@react-navigation/native-stack";
 import { Text, TouchableOpacity } from "react-native";
 import { YELLOW } from "../colors";
 
-const ScreenOne = ({ navigation: { navigate } }) => (
-  <TouchableOpacity onPress={() => navigate("Two")}>
+const ScreenOne: React.FC<NativeStackScreenProps<any, "ScreenOne">> = ({
+  navigation,
+}) => (
+  <TouchableOpacity onPress={() => navigation.navigate("Two")}>
     <Text>Go To Two</Text>
   </TouchableOpacity>
 );
-const ScreenTwo = ({ navigation: { navigate } }) => (
-  <TouchableOpacity onPress={() => navigate("Three")}>
+const ScreenTwo: React.FC<NativeStackScreenProps<any, "ScreenTwo">> = ({
+  navigation,
+}) => (
+  <TouchableOpacity onPress={() => navigation.navigate("Three")}>
     <Text>Go To Three</Text>
   </TouchableOpacity>
 );
-const ScreenThree = ({ navigation: { navigate } }) => (
-  <TouchableOpacity onPress={() => navigate("Tabs", { screen: "Search" })}>
+const ScreenThree: React.FC<NativeStackScreenProps<any, "ScreenThree">> = ({
+  navigation,
+}) => (
+  <TouchableOpacity
+    onPress={() => navigation.navigate("Tabs", { screen: "Search" })}
+  >
     <Text>Go To Search</Text>
   </TouchableOpacity>
 );
