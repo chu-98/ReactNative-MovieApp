@@ -5,10 +5,34 @@ import { ActivityIndicator, Dimensions } from "react-native";
 import styled from "styled-components/native";
 import Swiper from "react-native-web-swiper";
 import Slide from "../components/Slide";
+import Poster from "../components/Poster";
 
 const Loader = styled.View`
   flex: 1;
   justify-content: center;
+`;
+const ListTitle = styled.Text`
+  color: white;
+  font-size: 20px;
+  font-weight: 600;
+  margin-left: 20px;
+`;
+const TrendingScroll = styled.ScrollView`
+  margin-top: 10px;
+`;
+const Movie = styled.View`
+  margin-right: 10px;
+  align-items: center;
+`;
+const Title = styled.Text`
+  color: white;
+  font-weight: 600;
+  margin-top: 7px;
+  margin-bottom: 5px;
+`;
+const Votes = styled.Text`
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 13px;
 `;
 const Container = styled.ScrollView``;
 
@@ -66,7 +90,11 @@ const Movies: React.FC<NativeStackScreenProps<any, "Movies">> = () => {
         loop
         timeout={3.5}
         controlsEnabled={false}
-        containerStyle={{ width: "100%", height: SCREEN_HEIGHT / 4 }}
+        containerStyle={{
+          marginBottom: 10,
+          width: "100%",
+          height: SCREEN_HEIGHT / 4,
+        }}
       >
         {nowPlaying.map(movie => (
           <Slide
@@ -79,6 +107,23 @@ const Movies: React.FC<NativeStackScreenProps<any, "Movies">> = () => {
           />
         ))}
       </Swiper>
+      <ListTitle> Trending Movies </ListTitle>
+      <TrendingScroll
+        contentContainerStyle={{ paddingLeft: 20 }}
+        horizontal
+        showsHorizontalScrollIndicator={false}
+      >
+        {trending.map(movie => (
+          <Movie key={movie.id}>
+            <Poster path={movie.poster_path} />
+            <Title>
+              {movie.original_title.slice(0, 12)}
+              {movie.original_title.length > 12 ? "..." : null}
+            </Title>
+            <Votes>⭐️{movie.vote_average}</Votes>
+          </Movie>
+        ))}
+      </TrendingScroll>
     </Container>
   );
 };
