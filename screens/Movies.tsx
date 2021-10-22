@@ -14,8 +14,8 @@ const Loader = styled.View`
 const ListTitle = styled.Text`
   color: white;
   font-size: 20px;
-  font-weight: 600;
-  margin-left: 20px;
+  font-weight: 700;
+  margin-left: 10px;
 `;
 const TrendingScroll = styled.ScrollView`
   margin-top: 10px;
@@ -30,9 +30,35 @@ const Title = styled.Text`
   margin-top: 7px;
   margin-bottom: 5px;
 `;
+const ComingSoonTitle = styled(ListTitle)`
+  margin-bottom: 14px;
+`;
 const Votes = styled.Text`
   color: rgba(255, 255, 255, 0.8);
   font-size: 13px;
+`;
+const ListContainer = styled.View`
+  margin-bottom: 20px;
+`;
+const HMovie = styled.View`
+  padding: 0px 30px;
+  flex-direction: row;
+  margin-bottom: 13px;
+`;
+const HColumn = styled.View`
+  margin-left: 13px;
+  width: 80%;
+`;
+const Overview = styled.Text`
+  color: white;
+  width: 80%;
+  opacity: 0.8;
+`;
+const Release = styled.Text`
+  color: white;
+  font-weight: 500;
+  font-size: 13px;
+  margin-vertical: 3px;
 `;
 const Container = styled.ScrollView``;
 
@@ -57,7 +83,7 @@ const Movies: React.FC<NativeStackScreenProps<any, "Movies">> = () => {
   const getUpcoming = async () => {
     const { results } = await (
       await fetch(
-        `https://api.themoviedb.org/3/movie/upcoming?api_key=${API_KEY}&language=en-US&page=1&region=KR`
+        `https://api.themoviedb.org/3/movie/upcoming?api_key=${API_KEY}&language=en-US&page=1`
       )
     ).json();
     setUpComing(results);
@@ -107,23 +133,49 @@ const Movies: React.FC<NativeStackScreenProps<any, "Movies">> = () => {
           />
         ))}
       </Swiper>
-      <ListTitle> Trending Movies </ListTitle>
-      <TrendingScroll
-        contentContainerStyle={{ paddingLeft: 20 }}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-      >
-        {trending.map(movie => (
-          <Movie key={movie.id}>
-            <Poster path={movie.poster_path} />
-            <Title>
-              {movie.original_title.slice(0, 12)}
-              {movie.original_title.length > 12 ? "..." : null}
-            </Title>
-            <Votes>⭐️{movie.vote_average}</Votes>
-          </Movie>
-        ))}
-      </TrendingScroll>
+      <ListContainer>
+        {/* Trending Movies */}
+        <ListTitle> Trending Movies </ListTitle>
+        <TrendingScroll
+          contentContainerStyle={{ paddingLeft: 20 }}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+        >
+          {trending.map(movie => (
+            <Movie key={movie.id}>
+              <Poster path={movie.poster_path} />
+              <Title>
+                {movie.original_title.slice(0, 12)}
+                {movie.original_title.length > 12 ? "..." : null}
+              </Title>
+              <Votes>
+                {movie.vote_average > 0
+                  ? `⭐️${movie.vote_average}/10`
+                  : `Coming Soon`}
+              </Votes>
+            </Movie>
+          ))}
+        </TrendingScroll>
+      </ListContainer>
+
+      {/* Coming Soon */}
+      <ComingSoonTitle> Coming Soon </ComingSoonTitle>
+      {upComing.map(movie => (
+        <HMovie key={movie.id}>
+          <Poster path={movie.poster_path} />
+          <HColumn>
+            <Title>{movie.original_title}</Title>
+            <Release>
+              {new Date(movie.release_date).toLocaleDateString("ko")}
+            </Release>
+            <Overview>
+              {movie.overview !== "" && movie.overview.length > 150
+                ? `${movie.overview.slice(0, 150)}...`
+                : movie.overview}
+            </Overview>
+          </HColumn>
+        </HMovie>
+      ))}
     </Container>
   );
 };
