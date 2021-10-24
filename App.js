@@ -11,6 +11,10 @@ import Root from "./navigation/Root";
 import { ThemeProvider } from "styled-components";
 import { darkTheme, lightTheme } from "./styled";
 
+import { QueryClient, QueryClientProvider } from "react-query";
+
+const queryClient = new QueryClient();
+
 const loadFonts = fonts => fonts.map(font => Font.loadAsync(font));
 
 export default function App() {
@@ -31,10 +35,12 @@ export default function App() {
     );
   }
   return (
-    <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
-      <NavigationContainer>
-        <Root />
-      </NavigationContainer>
-    </ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
+        <NavigationContainer>
+          <Root />
+        </NavigationContainer>
+      </ThemeProvider>
+    </QueryClientProvider>
   );
 }
