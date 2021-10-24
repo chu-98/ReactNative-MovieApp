@@ -13,13 +13,13 @@ const Loader = styled.View`
   justify-content: center;
 `;
 const ListTitle = styled.Text`
-  color: white;
+  color: ${props => (props.isDark ? "white" : props.theme.textColor)};
   font-size: 20px;
   font-weight: 700;
   margin-left: 10px;
 `;
 const ComingSoonTitle = styled(ListTitle)`
-  color: white;
+  color: ${props => (props.isDark ? "white" : props.theme.textColor)};
   margin-bottom: 14px;
 `;
 const TrendingScroll = styled.FlatList`

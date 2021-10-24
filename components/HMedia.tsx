@@ -1,4 +1,5 @@
 import React from "react";
+import { useColorScheme } from "react-native";
 import styled from "styled-components/native";
 import Poster from "./Poster";
 import Votes from "./Votes";
@@ -12,18 +13,19 @@ const HColumn = styled.View`
   width: 80%;
 `;
 const Overview = styled.Text`
-  color: white;
+  color: ${props =>
+    props.isDark ? "rgba(255,255,255,0.8)" : "rgba(0, 0, 0, 0.8)"};
   width: 80%;
   opacity: 0.8;
 `;
 const Release = styled.Text`
-  color: white;
+  color: ${props => (props.isDark ? "white" : props.theme.textColor)};
   font-weight: 500;
   font-size: 13px;
   margin-vertical: 3px;
 `;
 const Title = styled.Text`
-  color: white;
+  color: ${props => (props.isDark ? "white" : props.theme.textColor)};
   font-weight: 600;
   margin-top: 7px;
   margin-bottom: 5px;
@@ -44,13 +46,14 @@ const HMedia: React.FC<HMediaProps> = ({
   releaseDate,
   voteAverage,
 }) => {
+  const isDark = useColorScheme() === "dark";
   return (
     <HMovie>
       <Poster path={posterPath} />
       <HColumn>
         <Title>
-          {originalTitle.length > 30
-            ? `${originalTitle.slice(0, 30)}...`
+          {originalTitle.length > 20
+            ? `${originalTitle.slice(0, 20)}...`
             : originalTitle}
         </Title>
         {releaseDate ? (

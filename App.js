@@ -6,24 +6,12 @@ import { useColorScheme } from "react-native";
 import React, { useState } from "react";
 import { Asset } from "expo-asset";
 import { NavigationContainer } from "@react-navigation/native";
-import Tabs from "./navigation/Tabs";
-import Stack from "./navigation/Stack";
 import Root from "./navigation/Root";
 
 import { ThemeProvider } from "styled-components";
 import { darkTheme, lightTheme } from "./styled";
 
 const loadFonts = fonts => fonts.map(font => Font.loadAsync(font));
-
-const loadImages = images => {
-  images.map(image => {
-    if (typeof image === "string") {
-      return Image.prefetch(image);
-    } else {
-      return Asset.loadAsync(image);
-    }
-  });
-};
 
 export default function App() {
   const [ready, setReady] = useState(false);
