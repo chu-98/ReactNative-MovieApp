@@ -6,7 +6,6 @@ import Votes from "./Votes";
 const HMovie = styled.View`
   padding: 0px 30px;
   flex-direction: row;
-  margin-bottom: 13px;
 `;
 const HColumn = styled.View`
   margin-left: 13px;
@@ -50,8 +49,9 @@ const HMedia: React.FC<HMediaProps> = ({
       <Poster path={posterPath} />
       <HColumn>
         <Title>
-          {originalTitle.length > 30} ? `${originalTitle.slice(0, 30)}...` :
-          originalTitle
+          {originalTitle.length > 30
+            ? `${originalTitle.slice(0, 30)}...`
+            : originalTitle}
         </Title>
         {releaseDate ? (
           <Release>

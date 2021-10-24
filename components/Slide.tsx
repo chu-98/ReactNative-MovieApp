@@ -31,36 +31,39 @@ const Votes = styled(OverView)`
 `;
 
 interface SlideProps {
-  backdrop_path: string;
-  poster_path: string;
-  original_title: string;
-  vote_average: number;
+  backdropPath: string;
+  posterPath: string;
+  originalTitle: string;
+  voteAverage: number;
   overview: string;
 }
 
 const Slide: React.FC<SlideProps> = ({
-  backdrop_path,
-  poster_path,
-  original_title,
-  vote_average,
+  backdropPath,
+  posterPath,
+  originalTitle,
+  voteAverage,
   overview,
 }) => {
   const isDark = useColorScheme() === "dark";
 
   return (
     <View style={{ flex: 1 }}>
-      <BgImg source={{ uri: makeImgPath(backdrop_path) }} />
+      <BgImg
+        style={StyleSheet.absoluteFill}
+        source={{ uri: makeImgPath(backdropPath) }}
+      />
       <BlurView
         tint={isDark ? "dark" : "light"}
         intensity={80}
         style={StyleSheet.absoluteFill}
       >
         <Wrapper>
-          <Poster path={poster_path} />
+          <Poster path={posterPath} />
           <Column>
-            <Title isDark={isDark}>{original_title}</Title>
-            {vote_average > 4 ? (
-              <Votes isDark={isDark}>⭐️{vote_average}/10</Votes>
+            <Title isDark={isDark}>{originalTitle}</Title>
+            {voteAverage > 4 ? (
+              <Votes isDark={isDark}>⭐️{voteAverage}/10</Votes>
             ) : null}
             <OverView isDark={isDark}>{overview.slice(0, 90)}...</OverView>
           </Column>
