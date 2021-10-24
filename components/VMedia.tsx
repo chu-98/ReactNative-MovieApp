@@ -10,7 +10,6 @@ const Title = styled.Text`
   margin-bottom: 5px;
 `;
 const Movie = styled.View`
-  margin-right: 10px;
   align-items: center;
 `;
 
@@ -28,8 +27,8 @@ const VMedia: React.FC<VMediaProps> = ({
   <Movie>
     <Poster path={posterPath} />
     <Title>
-      {originalTitle.slice(0, 12)}
-      {originalTitle.length > 12 ? "..." : null}
+      {originalTitle.slice(0, 10)}
+      {originalTitle.length > 10 ? "..." : null}
     </Title>
     <Votes votes={voteAverage} />
   </Movie>
