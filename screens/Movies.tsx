@@ -1,5 +1,5 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import React from "react";
+import React, { useState } from "react";
 import { Dimensions, FlatList } from "react-native";
 
 import styled from "styled-components/native";
@@ -29,28 +29,19 @@ const { height: SCREEN_HEIGHT } = Dimensions.get("window");
 
 const Movies: React.FC<NativeStackScreenProps<any, "Movies">> = () => {
   const queryClient = useQueryClient();
-  const {
-    isLoading: nowPlayingLoading,
-    data: nowPlayingData,
-    isRefetching: isRefetchingNowPlaying,
-  } = useQuery<MovieResponse>(["movies", "nowPlaying"], moviesAPI.nowPlaying);
-  const {
-    isLoading: upComingLoading,
-    data: upComingData,
-    isRefetching: isRefetchingUpComing,
-  } = useQuery<MovieResponse>(["movies", "upComing"], moviesAPI.upComing);
-  const {
-    isLoading: trendingLoading,
-    data: trendingData,
-    isRefetching: isRefetchingTrending,
-  } = useQuery<MovieResponse>(["movies", "trending"], moviesAPI.trending);
+  const [refreshing, setRefreshing] = useState(false);
+  const { isLoading: nowPlayingLoading, data: nowPlayingData } =
+    useQuery<MovieResponse>(["movies", "nowPlaying"], moviesAPI.nowPlaying);
+  const { isLoading: upComingLoading, data: upComingData } =
+    useQuery<MovieResponse>(["movies", "upComing"], moviesAPI.upComing);
+  const { isLoading: trendingLoading, data: trendingData } =
+    useQuery<MovieResponse>(["movies", "trending"], moviesAPI.trending);
 
   const onRefresh = async () => {
+    setRefreshing(true);
     queryClient.refetchQueries(["movies"]);
+    setRefreshing(false);
   };
-
-  const refreshing =
-    isRefetchingNowPlaying || isRefetchingUpComing || isRefetchingTrending;
   const loading = nowPlayingLoading || upComingLoading || trendingLoading;
   return loading ? (
     <Loader />
