@@ -5,11 +5,11 @@ import Poster from "./Poster";
 import Votes from "./Votes";
 
 const HMovie = styled.View`
-  padding: 0px 30px;
+  padding: 0px 15px;
   flex-direction: row;
 `;
 const HColumn = styled.View`
-  margin-left: 13px;
+  margin-left: 11px;
   width: 80%;
 `;
 const Overview = styled.Text`
