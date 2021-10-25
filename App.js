@@ -4,7 +4,6 @@ import { Ionicons } from "@expo/vector-icons";
 import { useColorScheme } from "react-native";
 
 import React, { useState } from "react";
-import { Asset } from "expo-asset";
 import { NavigationContainer } from "@react-navigation/native";
 import Root from "./navigation/Root";
 

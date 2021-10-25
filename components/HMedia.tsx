@@ -13,8 +13,7 @@ const HColumn = styled.View`
   width: 80%;
 `;
 const Overview = styled.Text`
-  color: ${props =>
-    props.isDark ? "rgba(255,255,255,0.8)" : "rgba(0, 0, 0, 0.8)"};
+  color: ${props => (props.isDark ? "white" : "rgba(0, 0, 0, 0.8)")};
   width: 80%;
   opacity: 0.8;
 `;
