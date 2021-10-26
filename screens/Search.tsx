@@ -8,7 +8,7 @@ import Loader from "../components/Loader";
 
 const Container = styled.ScrollView``;
 const SearchBar = styled.TextInput`
-  background-color: #485460;
+  background-color: #f0f0f0;
   padding: 15px 17px;
   border-radius: 12px;
   width: 90%;
@@ -45,7 +45,7 @@ const Search = () => {
     <Container>
       <SearchBar
         placeholder="Search for Movie or TV Show"
-        placeholderTextColor="white"
+        placeholderTextColor="black"
         returnKeyType="search"
         onChangeText={onChangeText}
         onSubmitEditing={onSubmit}
