@@ -92,11 +92,6 @@ const Detail: React.FC<DetailScreenProps> = ({
       });
     }
   };
-  const ShareButton = () => (
-    <TouchableOpacity onPress={shareMedia}>
-      <Ionicons name="share-outline" color="black" size={24} />
-    </TouchableOpacity>
-  );
   const isMovie = "original_title" in params;
   const { isLoading, data } = useQuery(
     [isMovie ? "movies" : "tv", params.id],
@@ -110,7 +105,11 @@ const Detail: React.FC<DetailScreenProps> = ({
   useEffect(() => {
     if (data) {
       setOptions({
-        headerRight: () => <ShareButton />,
+        headerRight: () => (
+          <TouchableOpacity onPress={shareMedia}>
+            <Ionicons name="share-outline" color="white" size={24} />
+          </TouchableOpacity>
+        ),
       });
     }
   }, [data]);

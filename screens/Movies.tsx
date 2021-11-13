@@ -6,7 +6,7 @@ import styled from "styled-components/native";
 import Swiper from "react-native-swiper";
 import Slide from "../components/Slide";
 import HMedia from "../components/HMedia";
-import { useQuery, useQueryClient } from "react-query";
+import { useInfiniteQuery, useQuery, useQueryClient } from "react-query";
 import { MovieResponse, moviesAPI } from "../api";
 import Loader from "../components/Loader";
 import HList from "../components/HList";
@@ -32,21 +32,39 @@ const Movies: React.FC<NativeStackScreenProps<any, "Movies">> = () => {
   const [refreshing, setRefreshing] = useState(false);
   const { isLoading: nowPlayingLoading, data: nowPlayingData } =
     useQuery<MovieResponse>(["movies", "nowPlaying"], moviesAPI.nowPlaying);
-  const { isLoading: upComingLoading, data: upComingData } =
-    useQuery<MovieResponse>(["movies", "upComing"], moviesAPI.upComing);
+  const {
+    isLoading: upComingLoading,
+    data: upComingData,
+    hasNextPage,
+    fetchNextPage,
+  } = useInfiniteQuery<MovieResponse>(
+    ["movies", "upComing"],
+    moviesAPI.upComing,
+    {
+      getNextPageParam: currentPage => {
+        const nextPage = currentPage.page + 1;
+        return nextPage > currentPage.total_pages ? null : nextPage;
+      },
+    }
+  );
   const { isLoading: trendingLoading, data: trendingData } =
     useQuery<MovieResponse>(["movies", "trending"], moviesAPI.trending);
-
   const onRefresh = async () => {
     setRefreshing(true);
     queryClient.refetchQueries(["movies"]);
     setRefreshing(false);
   };
   const loading = nowPlayingLoading || upComingLoading || trendingLoading;
+  const loadMore = () => {
+    if (hasNextPage) {
+      fetchNextPage();
+    }
+  };
   return loading ? (
     <Loader />
   ) : upComingData ? (
     <FlatList
+      onEndReached={loadMore}
       onRefresh={onRefresh}
       refreshing={refreshing}
       ListHeaderComponent={
@@ -55,7 +73,7 @@ const Movies: React.FC<NativeStackScreenProps<any, "Movies">> = () => {
             horizontal
             loop
             autoplay
-            autoplayTimeout={4}
+            autoplayTimeout={2}
             showsButtons={false}
             showsPagination={false}
             containerStyle={{
@@ -86,7 +104,7 @@ const Movies: React.FC<NativeStackScreenProps<any, "Movies">> = () => {
       keyExtractor={item => item.id + ""}
       showsHorizontalScrollIndicator={false}
       ItemSeparatorComponent={HSeparator}
-      data={upComingData.results}
+      data={upComingData.pages.map(page => page.results).flat()}
       renderItem={({ item }) => (
         <HMedia
           posterPath={item.poster_path}

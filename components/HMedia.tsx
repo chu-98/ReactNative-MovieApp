@@ -15,7 +15,8 @@ const HColumn = styled.View`
   width: 80%;
 `;
 const Overview = styled.Text`
-  color: ${props => (props.isDark ? "white" : "rgba(0, 0, 0, 0.8)")};
+  margin-top: 4px;
+  color: ${props => (props.isDark ? "white" : props.theme.textColor)};
   width: 80%;
   opacity: 0.8;
 `;

@@ -3,8 +3,7 @@ import { useColorScheme } from "react-native";
 import styled from "styled-components/native";
 
 const Text = styled.Text`
-  color: ${props =>
-    props.isDark ? "rgba(255,255,255,0.8)" : "rgba(0, 0, 0, 0.8)"};
+  color: ${props => (props.isDark ? "white" : props.theme.textColor)};
   font-size: 13px;
 `;
 
